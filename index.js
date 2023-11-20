@@ -115,7 +115,7 @@ const PORT = process.env.PORT || 3000;
 
 // const publishIterationName = "Mission-2"; // Replace with the actual iteration name
 // const publishIterationName = "Mission-2-attempt-1"; // Replace with the actual iteration name
-const publishIterationName = "Iteration 2"; // Replace with the actual iteration name
+const publishIterationName = "Iteration2"; // Replace with the actual iteration name
 
 // Check if all required environment variables are set
 if (!trainingKey || !trainingEndpoint || !predictionKey || !predictionResourceId || !predictionEndpoint) {
@@ -187,20 +187,12 @@ async function predictCarModel(imageFilePath) {
 
         // Make a prediction request to the Custom Vision API
         const predictionResult = await predictor.classifyImage(predictionResourceId, publishIterationName, imageData);
-        // const predictionResult = await predictor.detect_image(predictionResourceId, publishIterationName, imageData);
-        // const testFile = fs.readFileSync(`${sampleDataRoot}/Test/test_image.jpg`);
-                // const testRestsourceId = '/subscriptions/a1d73096-b435-48ba-916b-866c388fb10b/resourceGroups/Mission-2/providers/Microsoft.CognitiveServices/accounts/carrecognition'
-                // const testRestsourceId = 'a1d73096-b435-48ba-916b-866c388fb10b'
-                // const iterationName = 'classifyModel'
-                // const publishIterationName = "Mission-2"; // Replace with the actual iteration name
-                // const publishIterationName = "Mission-2-attempt-1"; // Replace with the actual iteration name
-                // const publishIterationName = "Iteration 2"; // Replace with the actual iteration name
                 // const results = await predictor.classifyImage(predictionResourceId, publishIterationName, imageData);
                 // const results = await predictor.classifyImage(testRestsourceId, iterationName, imageData);
 
             // Show results
             console.log("Results:");
-            results.predictions.forEach(predictedResult => {
+            predictionResult.predictions.forEach(predictedResult => {
             console.log(`\t ${predictedResult.tagName}: ${(predictedResult.probability * 100.0).toFixed(2)}%`);
 });
 
@@ -209,8 +201,10 @@ async function predictCarModel(imageFilePath) {
 
         return predictionResult;
     } catch (error) {
+        //--->##########--< Error Handling in `predictCarModel` Function
         console.error('Error predicting car model:', error);
-        throw error;
+        // Respond with an appropriate error message
+        throw new Error('Error predicting car model');
     }
 }
 
