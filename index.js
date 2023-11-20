@@ -1,3 +1,5 @@
+"use strict";
+
 // Import required modules
 const express = require("express");
 const bodyParser = require("body-parser");
